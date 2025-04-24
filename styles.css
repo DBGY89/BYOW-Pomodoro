@@ -83,6 +83,29 @@ h1 {
     font-weight: 600;
 }
 
+/* Add responsive styling for mobile */
+@media screen and (max-width: 480px) {
+    .controls {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 0 4px;
+    }
+    
+    .controls button {
+        padding: 0.6rem 0.75rem;
+        margin: 0;
+        font-size: 0.85rem;
+        flex: 1;
+        min-width: 0;
+        white-space: nowrap;
+    }
+
+    .container {
+        padding: 2rem 1.5rem;
+    }
+}
+
 #start {
     background-color: #ff6347;
     color: white;
