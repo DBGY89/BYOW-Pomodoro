@@ -7,19 +7,38 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Pomodoro Timer</h1>
-        <div class="timer">
-            <span id="minutes">25</span>:<span id="seconds">00</span>
+    <div class="app-container">
+        <div class="container timer-container">
+            <h1>Pomodoro Timer</h1>
+            <div class="timer-type">
+                <div class="switch-container">
+                    <div class="switch">
+                        <input type="checkbox" id="mode-toggle" class="mode-toggle">
+                        <label for="mode-toggle" class="switch-label">
+                            <span class="work">Work</span>
+                            <span class="rest">Rest</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="timer">
+                <span id="minutes">25</span>:<span id="seconds">00</span>
+            </div>
+            <div class="controls">
+                <button id="start">Start</button>
+                <button id="pause">Pause</button>
+                <button id="reset">Reset</button>
+            </div>
         </div>
-        <div class="timer-type">
-            <button class="mode-btn active" data-time="25" data-mode="work">Work</button>
-            <button class="mode-btn" data-time="5" data-mode="rest">Rest</button>
-        </div>
-        <div class="controls">
-            <button id="start">Start</button>
-            <button id="pause">Pause</button>
-            <button id="reset">Reset</button>
+        <div class="container todo-container">
+            <h2>Pending Tasks</h2>
+            <div class="todo-input-container">
+                <input type="text" id="todo-input" placeholder="Add a new task...">
+                <button id="add-todo">Add</button>
+            </div>
+            <ul id="todo-list" class="todo-list">
+                <!-- Tasks will be added here dynamically -->
+            </ul>
         </div>
     </div>
     <script src="script.js"></script>
