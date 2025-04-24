@@ -61,15 +61,15 @@ h1 {
 }
 
 .mode-btn.active {
-    background-color: #ff6347;
+    background-color: #22c55e;
     color: white;
-    border-color: #ff6347;
+    border-color: #22c55e;
     transform: translateY(-1px);
 }
 
 .mode-btn:hover {
     transform: translateY(-1px);
-    border-color: #ff6347;
+    border-color: #22c55e;
 }
 
 .controls button {
@@ -107,17 +107,17 @@ h1 {
 }
 
 #start {
-    background-color: #ff6347;
+    background-color: #22c55e;
     color: white;
 }
 
 #pause {
-    background-color: #fbbf24;
+    background-color: #15803d;
     color: white;
 }
 
 #reset {
-    background-color: #ef4444;
+    background-color: #166534;
     color: white;
 }
 
