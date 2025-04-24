@@ -1,13 +1,11 @@
 let timeLeft;
 let timerId = null;
-let sessions = 0;
 
 const minutesDisplay = document.getElementById('minutes');
 const secondsDisplay = document.getElementById('seconds');
 const startButton = document.getElementById('start');
 const pauseButton = document.getElementById('pause');
 const resetButton = document.getElementById('reset');
-const sessionsDisplay = document.getElementById('sessions');
 const modeButtons = document.querySelectorAll('.mode-btn');
 
 function updateDisplay(minutes, seconds) {
@@ -48,8 +46,6 @@ function startTimer() {
             
             const currentMode = document.querySelector('.mode-btn.active').dataset.mode;
             if (currentMode === 'work') {
-                sessions++;
-                sessionsDisplay.textContent = sessions;
                 switchMode('rest');
             } else {
                 switchMode('work');
