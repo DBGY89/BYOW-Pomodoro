@@ -1,6 +1,8 @@
 let timeLeft;
 let timerId = null;
 let todos = JSON.parse(localStorage.getItem('todos')) || [];
+let currentTask = null;
+let currentTaskId = null;
 
 const minutesDisplay = document.getElementById('minutes');
 const secondsDisplay = document.getElementById('seconds');
@@ -11,15 +13,24 @@ const modeToggle = document.getElementById('mode-toggle');
 const todoInput = document.getElementById('todo-input');
 const addTodoButton = document.getElementById('add-todo');
 const todoList = document.getElementById('todo-list');
+const taskModal = document.getElementById('task-modal');
+const taskSelect = document.getElementById('task-select');
+const confirmTaskButton = document.getElementById('confirm-task');
+const cancelTaskButton = document.getElementById('cancel-task');
 
 function updateDisplay(minutes, seconds) {
     minutesDisplay.textContent = String(minutes).padStart(2, '0');
     secondsDisplay.textContent = String(seconds).padStart(2, '0');
     
-    // Update the tab title with the remaining time
+    // Update the tab title with the remaining time and current task
     const mode = modeToggle.checked ? 'rest' : 'work';
     const modeText = mode.charAt(0).toUpperCase() + mode.slice(1);
-    document.title = `(${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}) ${modeText} - Pomodoro Timer`;
+    let title = `(${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}) ${modeText}`;
+    if (currentTask && mode === 'work') {
+        title += ` - ${currentTask}`;
+    }
+    title += ' - Pomodoro Timer';
+    document.title = title;
 }
 
 function setTimer(minutes) {
@@ -34,11 +45,58 @@ function switchMode(mode) {
     } else {
         modeToggle.checked = true;
         setTimer(5);
+        clearCurrentTask(); // Clear current task during rest
     }
+}
+
+function clearCurrentTask() {
+    currentTask = null;
+    currentTaskId = null;
+    updateActiveTask();
+}
+
+function updateActiveTask() {
+    // Remove active class from all tasks
+    document.querySelectorAll('.todo-item').forEach(item => {
+        item.classList.remove('active');
+    });
+
+    // Add active class to current task
+    if (currentTaskId) {
+        const activeTask = document.querySelector(`.todo-item[data-id="${currentTaskId}"]`);
+        if (activeTask) {
+            activeTask.classList.add('active');
+        }
+    }
+}
+
+function showTaskModal() {
+    // Update task select options
+    taskSelect.innerHTML = '<option value="">Select a task...</option>';
+    const uncompletedTasks = todos.filter(todo => !todo.completed);
+    uncompletedTasks.forEach(todo => {
+        const option = document.createElement('option');
+        option.value = todo.id;
+        option.textContent = todo.text;
+        taskSelect.appendChild(option);
+    });
+
+    taskModal.classList.add('show');
+}
+
+function hideTaskModal() {
+    taskModal.classList.remove('show');
 }
 
 function startTimer() {
     if (timerId !== null) return;
+
+    const isWorkMode = !modeToggle.checked;
+    
+    if (isWorkMode && !currentTask) {
+        showTaskModal();
+        return;
+    }
     
     timerId = setInterval(() => {
         timeLeft--;
@@ -54,7 +112,6 @@ function startTimer() {
                 switchMode('work');
             }
             
-            // Play notification sound (if you want to add this feature)
             try {
                 new Audio('notification.mp3').play();
             } catch (e) {
@@ -76,6 +133,7 @@ function pauseTimer() {
 
 function resetTimer() {
     pauseTimer();
+    clearCurrentTask();
     const mode = modeToggle.checked ? 'rest' : 'work';
     const minutes = mode === 'work' ? 25 : 5;
     setTimer(minutes);
@@ -88,7 +146,9 @@ function saveTodos() {
 
 function createTodoElement(todo) {
     const li = document.createElement('li');
-    li.className = 'todo-item' + (todo.completed ? ' completed' : '');
+    li.className = 'todo-item' + (todo.completed ? ' completed' : '') + 
+                  (todo.id === currentTaskId ? ' active' : '');
+    li.dataset.id = todo.id;
     
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
@@ -132,30 +192,57 @@ function toggleTodo(id) {
     const todo = todos.find(t => t.id === id);
     if (todo) {
         todo.completed = !todo.completed;
+        // If completed task is current task, clear it
+        if (todo.completed && id === currentTaskId) {
+            clearCurrentTask();
+        }
         saveTodos();
         renderTodos();
     }
 }
 
 function deleteTodo(id) {
+    // If deleted task is current task, clear it
+    if (id === currentTaskId) {
+        clearCurrentTask();
+    }
     todos = todos.filter(t => t.id !== id);
     saveTodos();
     renderTodos();
 }
 
-// Event Listeners
+// Event Listeners for Timer
 startButton.addEventListener('click', startTimer);
 pauseButton.addEventListener('click', pauseTimer);
 resetButton.addEventListener('click', resetTimer);
 
 modeToggle.addEventListener('change', () => {
     if (timerId) {
-        // If timer is running, pause it before switching modes
         pauseTimer();
     }
+    clearCurrentTask();
     const mode = modeToggle.checked ? 'rest' : 'work';
     const minutes = mode === 'work' ? 25 : 5;
     setTimer(minutes);
+});
+
+// Event Listeners for Task Modal
+confirmTaskButton.addEventListener('click', () => {
+    const selectedTaskId = parseInt(taskSelect.value);
+    if (selectedTaskId) {
+        const task = todos.find(t => t.id === selectedTaskId);
+        if (task) {
+            currentTask = task.text;
+            currentTaskId = task.id;
+            updateActiveTask();
+            hideTaskModal();
+            startTimer();
+        }
+    }
+});
+
+cancelTaskButton.addEventListener('click', () => {
+    hideTaskModal();
 });
 
 // Event Listeners for Todo List
@@ -177,6 +264,6 @@ todoInput.addEventListener('keypress', (e) => {
     }
 });
 
-// Initialize timer with work mode
+// Initialize
 setTimer(25);
 renderTodos(); 
