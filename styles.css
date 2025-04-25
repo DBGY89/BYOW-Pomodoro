@@ -20,7 +20,8 @@ body {
     gap: 2rem;
     max-width: 1200px;
     width: 90%;
-    margin: 0 auto;
+    margin: 2rem auto;
+    padding: 1rem 0;
 }
 
 .container {
@@ -46,6 +47,7 @@ body {
     text-align: left;
     display: flex;
     flex-direction: column;
+    border-radius: 1.5rem;
 }
 
 h2 {
@@ -190,7 +192,8 @@ h2 {
         gap: 1rem;
         height: 100%;
         overflow: hidden;
-        margin: 0;
+        margin: 1rem 0;
+        padding: 0.5rem 0;
     }
 
     .timer-container, .todo-container {
@@ -219,7 +222,7 @@ h2 {
     }
 
     h1 {
-        font-size: 2rem;
+        font-size: 1.75rem;
         margin-bottom: 1rem;
     }
 
@@ -253,7 +256,7 @@ h1 {
     color: #1a1a1a;
     margin-bottom: 2rem;
     font-weight: 700;
-    font-size: 2.5rem;
+    font-size: 2rem;
     letter-spacing: -0.5px;
 }
 
