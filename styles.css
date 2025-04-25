@@ -10,9 +10,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #fafafa;
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 30c4.97 0 9-4.03 9-9s-4.03-9-9-9-9 4.03-9 9 4.03 9 9 9zm0 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9z' fill='%23ff63471a' fill-rule='evenodd'/%3E%3C/svg%3E");
-    background-size: 80px 80px;
+    background-color: #fff5f5;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 15c8.284 0 15 6.716 15 15 0 8.284-6.716 15-15 15-8.284 0-15-6.716-15-15 0-8.284 6.716-15 15-15zm0 3c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0-8l3 5h-6l3-5' fill='%23ff63471a' fill-rule='evenodd'/%3E%3C/svg%3E");
+    background-size: 100px 100px;
 }
 
 .app-container {
@@ -129,6 +129,24 @@ h2 {
     border: 2px solid #e5e7eb;
     border-radius: 0.375rem;
     cursor: pointer;
+    appearance: none;
+    position: relative;
+    background-color: transparent;
+}
+
+.todo-item input[type="checkbox"]:checked {
+    background-color: transparent;
+    border-color: #22c55e;
+}
+
+.todo-item input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    color: #22c55e;
+    font-size: 1rem;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .todo-item.completed span {
@@ -138,15 +156,6 @@ h2 {
 
 .todo-item.completed {
     background-color: #f3f4f6;
-}
-
-.todo-item.completed input[type="checkbox"]::after {
-    content: '✓';
-    position: absolute;
-    color: #22c55e;
-    font-size: 1rem;
-    margin-left: 0.1rem;
-    margin-top: -0.1rem;
 }
 
 .delete-todo {
