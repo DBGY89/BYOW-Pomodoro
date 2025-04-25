@@ -44,7 +44,7 @@ function setTimer(minutes) {
 function switchMode(mode) {
     if (mode === 'work') {
         modeToggle.checked = false;
-        setTimer(25);
+        setTimer(1);
     } else {
         modeToggle.checked = true;
         setTimer(5);
@@ -147,7 +147,7 @@ function resetTimer() {
     pauseTimer();
     clearCurrentTask();
     const mode = modeToggle.checked ? 'rest' : 'work';
-    const minutes = mode === 'work' ? 25 : 5;
+    const minutes = mode === 'work' ? 1 : 5;
     setTimer(minutes);
 }
 
@@ -234,7 +234,7 @@ modeToggle.addEventListener('change', () => {
     }
     clearCurrentTask();
     const mode = modeToggle.checked ? 'rest' : 'work';
-    const minutes = mode === 'work' ? 25 : 5;
+    const minutes = mode === 'work' ? 1 : 5;
     setTimer(minutes);
 });
 
@@ -296,5 +296,5 @@ todoInput.addEventListener('keypress', (e) => {
 });
 
 // Initialize
-setTimer(25);
+setTimer(1);
 renderTodos(); 
