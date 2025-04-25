@@ -17,6 +17,9 @@ const taskModal = document.getElementById('task-modal');
 const taskSelect = document.getElementById('task-select');
 const confirmTaskButton = document.getElementById('confirm-task');
 const cancelTaskButton = document.getElementById('cancel-task');
+const completionModal = document.getElementById('completion-modal');
+const confirmCompletionButton = document.getElementById('confirm-completion');
+const cancelCompletionButton = document.getElementById('cancel-completion');
 
 function updateDisplay(minutes, seconds) {
     minutesDisplay.textContent = String(minutes).padStart(2, '0');
@@ -88,6 +91,14 @@ function hideTaskModal() {
     taskModal.classList.remove('show');
 }
 
+function showCompletionModal() {
+    completionModal.classList.add('show');
+}
+
+function hideCompletionModal() {
+    completionModal.classList.remove('show');
+}
+
 function startTimer() {
     if (timerId !== null) return;
 
@@ -107,7 +118,8 @@ function startTimer() {
             
             const currentMode = modeToggle.checked ? 'rest' : 'work';
             if (currentMode === 'work') {
-                switchMode('rest');
+                // Show completion modal before switching to rest mode
+                showCompletionModal();
             } else {
                 switchMode('work');
             }
@@ -243,6 +255,25 @@ confirmTaskButton.addEventListener('click', () => {
 
 cancelTaskButton.addEventListener('click', () => {
     hideTaskModal();
+});
+
+// Event Listeners for Completion Modal
+confirmCompletionButton.addEventListener('click', () => {
+    if (currentTaskId) {
+        const todo = todos.find(t => t.id === currentTaskId);
+        if (todo) {
+            todo.completed = true;
+            saveTodos();
+            renderTodos();
+        }
+    }
+    hideCompletionModal();
+    switchMode('rest');
+});
+
+cancelCompletionButton.addEventListener('click', () => {
+    hideCompletionModal();
+    switchMode('rest');
 });
 
 // Event Listeners for Todo List

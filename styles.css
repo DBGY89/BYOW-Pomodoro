@@ -128,6 +128,19 @@ h2 {
     color: #9ca3af;
 }
 
+.todo-item.completed {
+    background-color: #f3f4f6;
+}
+
+.todo-item.completed input[type="checkbox"]::after {
+    content: '✓';
+    position: absolute;
+    color: #22c55e;
+    font-size: 1rem;
+    margin-left: 0.1rem;
+    margin-top: -0.1rem;
+}
+
 .delete-todo {
     margin-left: auto;
     padding: 0.25rem 0.5rem;
