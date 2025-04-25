@@ -49,6 +49,7 @@ body {
     flex-direction: column;
     border-radius: 1.5rem;
     margin-bottom: 2rem;
+    height: 400px;
 }
 
 h2 {
@@ -98,10 +99,29 @@ h2 {
 
 .todo-list {
     list-style: none;
-    max-height: 400px;
+    flex: 1;
     overflow-y: auto;
     margin-bottom: 1rem;
     border-radius: 0 0 1.5rem 1.5rem;
+}
+
+/* Customize scrollbar for better appearance */
+.todo-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.todo-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 0 1.5rem 1.5rem 0;
+}
+
+.todo-list::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+.todo-list::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
 }
 
 .todo-item {
@@ -210,6 +230,7 @@ h2 {
 
     .todo-container {
         margin-bottom: 2rem;
+        height: 350px;
     }
 
     .todo-list {
